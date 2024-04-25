@@ -31,7 +31,7 @@ export default function RootLayout({
 
           <main className='flex flex-row'>
             <LeftSidebar />
-            <section className='main-container'>
+            <section className='main-container sm:text-xsm'>
               <div className='w-full'>{children}</div>
             </section>
             {/* @ts-ignore */}

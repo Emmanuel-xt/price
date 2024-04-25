@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 w-full;
+    @apply flex min-h-screen flex-1 flex-col items-center sm:text-xsm bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 w-full;
   }
 
   /* Head Text */
@@ -46,8 +46,8 @@
     @apply flex flex-1 items-start justify-start gap-3 xs:items-center;
   }
 
-  .user-card_btn {
-    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+  .btn {
+    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 flex items-center justify-center !important;
   }
 
   .searchbar {
