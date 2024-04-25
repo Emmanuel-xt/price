@@ -6,18 +6,18 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/search.svg",
-    route: "/search",
-    label: "Search",
+    route: "/price",
+    label: "Price",
   },
-  {
-    imgURL: "/assets/heart.svg",
-    route: "/activity",
-    label: "Activity",
-  },
+  // {
+  //   imgURL: "/assets/heart.svg",
+  //   route: "/activity",
+  //   label: "Activity",
+  // },
   {
     imgURL: "/assets/create.svg",
-    route: "/create-thread",
-    label: "Create Thread",
+    route: "/add",
+    label: "Add",
   },
   // {
   //   imgURL: "/assets/community.svg",
@@ -37,6 +37,18 @@ export const HomeCategories = [
   { value: "Wears", label: "Wears", icon: "/assets/request.svg" },
   { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },
   { value: "Food", label: "Food", icon: "/assets/request.svg" },
+  { value: "Others", label: "Others", icon: "/assets/request.svg" },
+
+];
+export const PriceCategories = [
+
+  { value: "All", label: "All", icon: "/assets/members.svg" },
+  { value: "Educational", label: "Educational", icon: "/assets/members.svg" },
+  { value: "Gadgets", label: "Gadgets", icon: "/assets/request.svg" },
+  { value: "Wears", label: "Wears", icon: "/assets/request.svg" },
+  { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },
+  { value: "Food", label: "Food Items", icon: "/assets/request.svg" },
+  { value: "Services", label: "Services", icon: "/assets/request.svg" },
   { value: "Others", label: "Others", icon: "/assets/request.svg" },
 
 ];
@@ -64,7 +76,6 @@ export const studentItems = [
   { category: "Toiletries", name: "Tissue", price: 50, qty: 1 },
   { category: "Food", name: "Instant Noodles", price: 80, qty: 1 },
   { category: "Food", name: "Rice (5kg)", price: 700, qty: 1 },
-  { category: "Food", name: "Canned Beans", price: 120, qty: 1 },
   { category: "Food", name: "Canned Beans", price: 120, qty: 1 },
   { category: "Food", name: "Bread", price: 150, qty: 1 },
   { category: "Food", name: "Milk (1 liter)", price: 200, qty: 1 },

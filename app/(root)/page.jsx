@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 const Home = () => {
+    const searchQuery = searchParams.get("q");
   return (
     <section className="flex flex-col  w-full">
       <div className="mt-4 w-full">
@@ -74,11 +75,6 @@ const Home = () => {
               >
                 <p className="max-sm:text-xsm">{tab.label}</p>
 
-                {tab.label === "Threads" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {userInfo.threads.length}
-                  </p>
-                )}
               </TabsTrigger>
             ))}
           </TabsList>

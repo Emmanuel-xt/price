@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center sm:text-xsm bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 w-full;
+    @apply flex min-h-screen flex-1 flex-col items-center sm:text-xsm text-light-1 bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 w-full;
   }
 
   /* Head Text */
@@ -50,21 +50,14 @@
     @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 flex items-center justify-center !important;
   }
 
-  .searchbar {
-    @apply flex gap-1 rounded-lg bg-dark-3 px-4 py-2;
-  }
-
-  .searchbar_input {
-    @apply border-none bg-dark-3 text-base-regular text-light-4 outline-none !important;
-  }
 
   .topbar {
     @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
   }
 
-  .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
-  }
+  /* .bottombar {
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-2 backdrop-blur-lg xs:px-7 md:hidden;
+  } */
 
   .bottombar_container {
     @apply flex items-center justify-between gap-3 xs:gap-5;
