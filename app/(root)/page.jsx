@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 
 const Home = () => {
-    const searchQuery = searchParams.get("q");
   return (
     <section className="flex flex-col  w-full">
       <div className="mt-4 w-full">

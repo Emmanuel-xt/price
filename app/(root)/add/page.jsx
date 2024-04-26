@@ -11,6 +11,7 @@ import {
 const page = () => {
   return (
     <section className="flex flex-col gap-10">
+      <h4 className="head-text">Add Item/Price</h4>
       <div className="flex gap-3 items-center">
         <h4>Name</h4>
         <Input
