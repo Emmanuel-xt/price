@@ -1,5 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { HomeCategories, InfoCategories, studentItems } from "@/constants";
+import {
+  HomeCategories,
+  InfoCategories,
+  calculateAverage,
+  roundPrice,
+  studentItems,
+} from "@/constants";
 import Image from "next/image";
 import React from "react";
 
@@ -44,14 +50,20 @@ const Home = () => {
                         <div className="flex gap-4 items-center">
                           <h5 className="text-white sm:text-xsm  ">
                             {item.name}
-                          </h5> 
+                          </h5>
 
-                         <p className="text-[8px] bg-slate-900 p-[1px]">{item.qty}x</p>
+                          <p className="text-[8px] bg-slate-900 p-[1px]">
+                            {item.qty}x
+                          </p>
                         </div>
                         <div className="flex gap-3">
-                            <p className="text-[9px] font-extralight">999.87</p>
-                        
-                        <p className="btn py-1">{item.price}</p>
+                          <p className="text-[9px] font-extralight">
+                            {calculateAverage(item.prices)}
+                          </p>
+
+                          <p className="btn py-1">
+                            {roundPrice(calculateAverage(item.prices))}
+                          </p>
                         </div>
                       </div>
                     )
@@ -61,7 +73,6 @@ const Home = () => {
           ))}
         </Tabs>
       </div>
-
 
       <div className="mt-4 w-full">
         <Tabs defaultValue="Shops" className=" bg-transparent ">
@@ -73,7 +84,6 @@ const Home = () => {
                 className=" bg-transparent focus:bg-transparent data-[state=active]:bg-transperent data-[state=active]:text-white text-slate-400 data-[state=active]:border-b-2"
               >
                 <p className="max-sm:text-xsm">{tab.label}</p>
-
               </TabsTrigger>
             ))}
           </TabsList>
@@ -96,9 +106,11 @@ const Home = () => {
                         <div className="flex gap-4 items-center">
                           <h5 className="text-white sm:text-xsm  ">
                             {item.name}
-                          </h5> 
+                          </h5>
 
-                         <p className="text-[8px] bg-slate-900 p-[1px]">{item.qty}x</p>
+                          <p className="text-[8px] bg-slate-900 p-[1px]">
+                            {item.qty}x
+                          </p>
                         </div>
                         <p className="btn">{item.price}</p>
                       </div>
@@ -109,8 +121,6 @@ const Home = () => {
           ))}
         </Tabs>
       </div>
-
-
     </section>
   );
 };
