@@ -3,6 +3,7 @@ import {
   HomeCategories,
   InfoCategories,
   calculateAverage,
+  filterOutliers,
   roundPrice,
   studentItems,
 } from "@/constants";
@@ -58,11 +59,11 @@ const Home = () => {
                         </div>
                         <div className="flex gap-3">
                           <p className="text-[9px] font-extralight">
-                            {calculateAverage(item.prices)}
+                            {filterOutliers(item.prices)}
                           </p>
 
                           <p className="btn py-1">
-                            {roundPrice(calculateAverage(item.prices))}
+                            {roundPrice(filterOutliers(item.prices))}
                           </p>
                         </div>
                       </div>

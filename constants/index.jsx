@@ -53,7 +53,7 @@ export const PriceCategories = [
 
 ];
 export const studentItems = [
-  { category: "Educational", name: "Notebook", prices: [1000, 1050, 1100, 1150, 1200, 1250], qty: 5 },
+  { category: "Educational", name: "Notebook", prices: [1000, 1050, 1100, 1150, 1200, 1250 , 900, 800 ,100 ,2000,2000,2000,2000,2000,2000], qty: 5 },
   { category: "Educational", name: "Pens", prices: [1500, 1550, 1600, 1650, 1700, 1750], qty: 2 },
   { category: "Educational", name: "Textbook", prices: [7500, 7600, 7700, 7800, 7900, 8000], qty: 1 },
   { category: "Gadgets", name: "Laptop", prices: [300000, 310000, 320000, 330000, 340000, 350000], qty: 1 },
@@ -83,71 +83,82 @@ export const studentItems = [
   { category: "Others", name: "Hoodie", prices: [2000, 2010, 2020, 2030, 2040, 2050], qty: 1 },
   { category: "Toiletries", name: "Deodorant", prices: [300, 305, 310, 315, 320, 325], qty: 1 },
   { category: "Others", name: "Pasta", prices: [150, 155, 160, 165, 170, 175], qty: 1 },
-  { category: "Educational", name: "Folders (Pack of 3)", prices: [300, 305, 310, 315, 320, 325 ,360], qty: 1 },
-  { category: "Gadgets", name: "Wireless Mouse", prices: [800, 805, 810, 815, 820, 825 ,800 , 810,900 ,], qty: 1 },
+  { category: "Educational", name: "Folders (Pack of 3)", prices: [300, 305, 310, 315, 320, 325 , 242], qty: 1 },
+  { category: "Gadgets", name: "Wireless Mouse", prices: [800, 805, 810, 815, 820, 825 ,800 , 810,90 ,], qty: 1 },
   { category: "Wears", name: "Flip-flops", prices: [500, 505, 510, 515, 520, 525], qty: 1 },
   { category: "Toiletries", name: "Toilet Paper (Pack of 4)", prices: [200, 205, 210, 215, 220, 225], qty: 1 },
   { category: "Food", name: "Eggs (Dozen)", prices: [400, 405, 410, 415, 420, 425], qty: 1 }
 ];
-function filterOutliers(prices) {
-  // Define the thresholds for each price range
-  const thresholds = [
-    { range: [0, 500], threshold: 300 },
-    { range: [500, 2000], threshold: 1000 },
-    { range: [2001, 5000], threshold: 1500 },
-    { range: [5001, 10000], threshold: 2000 }
-    // Add more ranges and thresholds as needed
-  ];
-  console.log('thresholds =' , thresholds)
+
+export const filterOutliers = (prices) => {
+  // console.log('about to perform the filter function')
+  // console.log({prices})
+  // Calculate the frequency of each price
+  const priceFrequency = prices.reduce((acc, price) => {
+    acc[price] = (acc[price] || 0) + 1;
+    return acc;
+  }, {});
+  // console.log({priceFrequency})
   
-  // Filter out prices that exceed the threshold for their respective range
-  const filteredPrices = prices.filter(price => {
-    const range = thresholds.find(({ range }) => price >= range[0] && price <= range[1]);
-    return range ? Math.abs(price - range.threshold) <= range.threshold : false;
-  });
+  // Find the price that appears most frequently
+  const maxFrequency = Math.max(...Object.values(priceFrequency));
+  const maxFrequencyPercentage = (maxFrequency / prices.length) * 100;
+  // console.log({maxFrequency})
+  // console.log({maxFrequencyPercentage})
+  
+  if (maxFrequencyPercentage >= 40) {
+    const majorityPrices = Object.keys(priceFrequency).filter(price => priceFrequency[price] === maxFrequency).map(Number);
+    return calculateAverage(majorityPrices);
+  }
+  
+  // Calculate the median price
+  const sortedPrices = prices.sort((a, b) => a - b);
+  const medianIndex = Math.floor(sortedPrices.length / 2);
+  const medianPrice = sortedPrices[medianIndex];
+  // console.log({sortedPrices})
+  // console.log({medianIndex})
+  // console.log({medianPrice})
+  
+  // Calculate the acceptable price range around the median
+  // Calculate the acceptable price range around the median based on median price
+  let deviation = 0;
+  if (medianPrice <= 500) {
+    deviation = 100;
+  } else if (medianPrice <= 1000) {
+    deviation = 150;
+  } else if (medianPrice <= 2000) {
+    deviation = 200;
+  } else if (medianPrice <= 5000) {
+    deviation = 500;
+  } else if (medianPrice <= 10000) {
+    deviation = 750;
+  } else if (medianPrice <= 20000) {
+    deviation = 1000;
+  }
+  // Add more conditions for other ranges as needed
 
-  // Calculate the mean (average) of the filtered prices
-  const mean = filteredPrices.reduce((acc, price) => acc + price, 0) / filteredPrices.length;
+  // Calculate the acceptable price range
+  const minPrice = medianPrice - deviation;
+  const maxPrice = medianPrice + deviation;
+  
+  // Filter out prices within the acceptable range
+  const filteredPrices = prices.filter(price => price >= minPrice && price <= maxPrice);
+  // console.log({filteredPrices})
 
-  // Calculate the standard deviation of the filtered prices
-  const standardDeviation = Math.sqrt(filteredPrices.reduce((acc, price) => acc + Math.pow(price - mean, 2), 0) / filteredPrices.length);
-
-  // Define the threshold for outliers based on the standard deviation
-  const threshold = standardDeviation * 2;
-  console.log('threshold =' ,prices , threshold)
-
-  // Filter out prices that deviate more than the threshold from the mean
-  const finalFilteredPrices = filteredPrices.filter(price => Math.abs(price - mean) <= threshold);
-
-  return finalFilteredPrices;
+  // Calculate the average based on the filtered prices
+  return calculateAverage(filteredPrices);
 }
+
 export const calculateAverage = (prices) => {
   if (prices.length === 0) {
     return 0;
   }
 
-  // Sort the prices in ascending order
-  const sortedPrices = prices.sort((a, b) => a - b);
-
-  // Calculate the lower and upper quartiles
-  const lowerQuartile = sortedPrices[Math.floor(sortedPrices.length * 0.25)];
-  const upperQuartile = sortedPrices[Math.floor(sortedPrices.length * 0.75)];
-
-  // Calculate the interquartile range
-  const interquartileRange = upperQuartile - lowerQuartile;
-
-  // Define the lower and upper bounds for outliers
-  const lowerBound = lowerQuartile - 1.5 * interquartileRange;
-  const upperBound = upperQuartile + 1.5 * interquartileRange;
-
-  // Filter out prices that are outliers
-  const filteredPrices = prices.filter(price => price >= lowerBound && price <= upperBound);
-
-  // Calculate the sum of filtered prices
-  const sum = filteredPrices.reduce((acc, price) => acc + price, 0);
+  // Calculate the sum of prices
+  const sum = prices.reduce((acc, price) => acc + price, 0);
 
   // Calculate the average
-  const average = sum / filteredPrices.length;
+  const average = sum / prices.length;
 
   return average;
 };
