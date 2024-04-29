@@ -41,7 +41,6 @@ export const HomeCategories = [
 
 ];
 export const PriceCategories = [
-
   { value: "All", label: "All", icon: "/assets/members.svg" },
   { value: "Educational", label: "Educational", icon: "/assets/members.svg" },
   { value: "Gadgets", label: "Gadgets", icon: "/assets/request.svg" },
@@ -53,7 +52,7 @@ export const PriceCategories = [
 
 ];
 export const studentItems = [
-  { category: "Educational", name: "Notebook", prices: [1000, 1050, 1100, 1150, 1200, 1250 , 900, 800 ,100 ,2000,2000,2000,2000,2000,2000], qty: 5 },
+  { category: "Educational", name: "Notebook", prices: [7000], qty: 5 },
   { category: "Educational", name: "Pens", prices: [1500, 1550, 1600, 1650, 1700, 1750], qty: 2 },
   { category: "Educational", name: "Textbook", prices: [7500, 7600, 7700, 7800, 7900, 8000], qty: 1 },
   { category: "Gadgets", name: "Laptop", prices: [300000, 310000, 320000, 330000, 340000, 350000], qty: 1 },

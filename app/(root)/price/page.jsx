@@ -6,6 +6,8 @@ import {
   HomeCategories,
   InfoCategories,
   PriceCategories,
+  filterOutliers,
+  roundPrice,
   studentItems,
 } from "@/constants";
 import Image from "next/image";
@@ -39,6 +41,7 @@ const page = ({ searchParams }) => {
             ))}
           </TabsList>
           {PriceCategories.map((tab) => (
+            
             <TabsContent
               key={`content-${tab.label}`}
               value={tab.value}
@@ -75,9 +78,9 @@ const page = ({ searchParams }) => {
                             </p>
                           </div>
                           <div className="flex gap-3">
-                            <p className="text-[9px] font-extralight">999.87</p>
+                            <p className="text-[9px] font-extralight">{filterOutliers(item.prices)}</p>
 
-                            <p className="btn py-1">{item.price}</p>
+                            <p className="btn py-1">{roundPrice(filterOutliers(item.prices))}</p>
                           </div>
                         </div>
                       )
