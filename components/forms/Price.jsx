@@ -26,8 +26,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { addItem } from "@/lib/actions/price.actions";
+import { useRouter } from "next/navigation";
 
 const Price = () => {
+    const router = useRouter()
+
   const [itemName, setItemName] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -60,11 +64,22 @@ const Price = () => {
     defaultValues: {
       itemName: "",
       category: "",
+      unit : '',
       price: "",
     },
   });
 
-  const onSubmit = (values) => {};
+  const onSubmit = (values) => {
+    console.log({values})
+    addItem({
+        itemName : values.itemName ,
+        price : values.price ,
+        category : values.category,
+        unit : values.unit
+
+    })
+    router.push('/price')
+  };
 
   return (
     <Form {...form}>
@@ -130,7 +145,7 @@ const Price = () => {
           />
           <FormField
             control={form.control}
-            name="price amount"
+            name="unit"
             className="flex gap-4"
             render={({ field }) => (
               <FormItem className="flex gap-3 items-center">
@@ -155,7 +170,7 @@ const Price = () => {
           render={({ field }) => (
             <FormItem className="flex items-center gap-3">
               <FormLabel>Category</FormLabel>
-              <Select>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger className="w-[180px] bg-dark-1 border-primary-500 outline-none">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
