@@ -7,10 +7,13 @@ import {
   roundPrice,
   studentItems,
 } from "@/constants";
+import { getPosts } from "@/lib/actions/price.actions";
 import Image from "next/image";
 import React from "react";
 
-const Home = () => {
+const Home = async () => {
+  const posts = await getPosts();
+  console.log({posts})
   return (
     <section className="flex flex-col  w-full">
       <div className="mt-4 w-full">
@@ -84,7 +87,7 @@ const Home = () => {
                 value={tab.value}
                 className=" bg-transparent focus:bg-transparent data-[state=active]:bg-transperent data-[state=active]:text-white text-slate-400 data-[state=active]:border-b-2"
               >
-                <p className="max-sm:text-xsm">{tab.label}</p>
+                <p className="max-sm:text-xsm">kkkk{tab.label}</p>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -121,6 +124,11 @@ const Home = () => {
             </TabsContent>
           ))}
         </Tabs>
+      </div>
+
+
+      <div className="">
+        <h4 className="">Posts</h4>
       </div>
     </section>
   );
