@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'production'){
         console.log('Prisma Client established ...')
     }
     prisma = global.prisma
+    console.log('Prisma Client already established ...')
 }
 
 export default prisma
