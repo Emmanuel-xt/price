@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { addItem } from "@/lib/actions/price.actions";
+import {  addItemWithPrices, createUser } from "@/lib/actions/price.actions";
 import { useRouter } from "next/navigation";
 
 const Price = () => {
@@ -71,11 +71,12 @@ const Price = () => {
 
   const onSubmit = (values) => {
     console.log({values})
-    addItem({
+    addItemWithPrices({
         itemName : values.itemName ,
-        price : values.price ,
+        price : values.price.to ,
         category : values.category,
-        unit : values.unit
+        unit : values.unit,
+        userId: 4,
 
     })
     router.push('/price')

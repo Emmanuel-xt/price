@@ -9,22 +9,30 @@ datasource db {
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+model Category {
+  name      String     @id
+  items     Item[]
+}
 
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+model Item {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  category    Category  @relation(fields: [categoryName], references: [name])
+  categoryName  String
+  prices      Price[]
 }
 
 model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  @@map(name: "users")
+  id    Int     @id @default(autoincrement())
+  name  String   @unique
+  prices Price[]
+}
+
+model Price {
+  id       Int     @id @default(autoincrement())
+  value    Int
+  item     Item    @relation(fields: [itemName], references: [name])
+  itemName String
+  user     User    @relation(fields: [userName], references: [name])
+  userName String
 }

@@ -7,13 +7,10 @@ import {
   roundPrice,
   studentItems,
 } from "@/constants";
-import { getPosts } from "@/lib/actions/price.actions";
 import Image from "next/image";
 import React from "react";
 
 const Home = async () => {
-  const posts = await getPosts();
-  console.log({posts})
   return (
     <section className="flex flex-col  w-full">
       <div className="mt-4 w-full">
