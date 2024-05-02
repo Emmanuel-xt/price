@@ -70,14 +70,13 @@ const Price = () => {
   });
 
   const onSubmit = (values) => {
-    console.log({values})
+    console.log(values.price)
     addItemWithPrices({
         itemName : values.itemName ,
-        price : values.price.to ,
+        price : values.price ,
         category : values.category,
         unit : values.unit,
         userId: 4,
-
     })
     router.push('/price')
   };
@@ -134,7 +133,7 @@ const Price = () => {
                 <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                   type='number'
                     placeholder=" Price"
                     className="bg-dark-1 border-primary-500"
                     {...field}
