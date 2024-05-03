@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import {
   Select,
@@ -26,26 +27,42 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import {  addItemWithPrices, createUser } from "@/lib/actions/price.actions";
+import {  addDummyData, addItemWithPrices, createUser, } from "@/lib/actions/price.actions";
 import { useRouter } from "next/navigation";
+// import { createUser } from "@/lib/actions/user.action";
 
 const Price = () => {
-    const router = useRouter()
+  const router = useRouter();
 
   const [itemName, setItemName] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
+  // useForm hook from react-hook-form
+  const form = useForm({
+    resolver: zodResolver(itemValidation),
+    defaultValues: {
+      itemName: "",
+      category: "",
+      unit: "",
+      price: "",
+    },
+  });
+
   // Function to handle input change and filter items
-  const handleInputChange = (event) => {
-    const inputValue = event.target.value;
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    console.log('v' , inputValue)
     setSearchValue(inputValue);
     const filtered = studentItems.filter((item) =>
       item.name.toLowerCase().startsWith(inputValue.toLowerCase())
     );
     setFilteredItems(filtered);
     setDropdownOpen(true); // Open the dropdown when input changes
+
+    // Manually update the form library's value for itemName
+    form.setValue("itemName", inputValue);
   };
 
   // Function to handle item selection
@@ -57,28 +74,24 @@ const Price = () => {
       item.name.toLowerCase().startsWith(itemName.toLowerCase())
     );
     setFilteredItems(filtered);
+
+    // Manually update the form library's value for itemName
+    form.setValue("itemName", itemName);
   };
 
-  const form = useForm({
-    resolver: zodResolver(itemValidation),
-    defaultValues: {
-      itemName: "",
-      category: "",
-      unit : '',
-      price: "",
-    },
-  });
-
   const onSubmit = (values) => {
-    console.log(values.price)
-    addItemWithPrices({
-        itemName : values.itemName ,
-        price : values.price ,
-        category : values.category,
-        unit : values.unit,
-        userId: 4,
-    })
-    router.push('/price')
+  //   addItemWithPrices(
+  //   //   {
+  //   //   itemName: values.itemName,
+  //   //   price: values.price,
+  //   //   category: values.category,
+  //   //   unit: values.unit,
+  //   //   userId: 4,
+  //   // }
+  // );
+  addDummyData();
+  // createUser()
+    // router.push("/price");
   };
 
   return (
@@ -98,7 +111,7 @@ const Price = () => {
                     className="bg-dark-1 border-primary-500 outline-primary-500 md:max-w-[50%]"
                     value={searchValue}
                     onChange={handleInputChange}
-                    {...field}
+                    // {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -133,7 +146,7 @@ const Price = () => {
                 <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input
-                   type='number'
+                    type="number"
                     placeholder=" Price"
                     className="bg-dark-1 border-primary-500"
                     {...field}
