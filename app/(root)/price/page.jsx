@@ -93,11 +93,11 @@ const page = ({ searchParams }) => {
                           </div>
                           <div className="flex gap-3">
                             <p className="text-[9px] font-extralight">
-                              {filterOutliers(item.prices.values)}
+                              {filterOutliers(item.prices)}
                             </p>
 
                             <p className="btn py-1">
-                              {roundPrice(filterOutliers(item.prices.values))}
+                              {roundPrice(filterOutliers(item.prices))}
                             </p>
                           </div>
                         </div>
