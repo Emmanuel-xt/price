@@ -8,14 +8,29 @@ import {
   PriceCategories,
   filterOutliers,
   roundPrice,
-  studentItems,
+  // studentItems,
 } from "@/constants";
+import { getAllItems } from "@/lib/actions/price.actions";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const page = ({ searchParams }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  console.log("searchparams =", searchParams);
+  const [studentItems, setStudentItems] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const items = await getAllItems();
+        setStudentItems(items);
+        console.log("items =", items);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div>
       <div className="mt-4 w-full">
@@ -41,7 +56,6 @@ const page = ({ searchParams }) => {
             ))}
           </TabsList>
           {PriceCategories.map((tab) => (
-            
             <TabsContent
               key={`content-${tab.label}`}
               value={tab.value}
@@ -51,7 +65,7 @@ const page = ({ searchParams }) => {
               {/* Fetch Items from database according to category */}
               <div className=" m-1 flex flex-col gap-3">
                 {studentItems
-                  .filter((item) => {
+                  ?.filter((item) => {
                     if (searchParams.q) {
                       return item.name
                         .toLowerCase()
@@ -63,7 +77,7 @@ const page = ({ searchParams }) => {
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map(
                     (item) =>
-                      (item.category === tab.value || tab.value === "All") && (
+                      (item.categoryName === tab.value || tab.value === "All") && (
                         <div
                           className="flex w-full justify-between"
                           key={item.name}
@@ -78,9 +92,13 @@ const page = ({ searchParams }) => {
                             </p>
                           </div>
                           <div className="flex gap-3">
-                            <p className="text-[9px] font-extralight">{filterOutliers(item.prices)}</p>
+                            <p className="text-[9px] font-extralight">
+                              {filterOutliers(item.prices.values)}
+                            </p>
 
-                            <p className="btn py-1">{roundPrice(filterOutliers(item.prices))}</p>
+                            <p className="btn py-1">
+                              {roundPrice(filterOutliers(item.prices.values))}
+                            </p>
                           </div>
                         </div>
                       )

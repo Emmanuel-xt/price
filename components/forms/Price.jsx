@@ -80,18 +80,18 @@ const Price = () => {
   };
 
   const onSubmit = (values) => {
-  //   addItemWithPrices(
-  //   //   {
-  //   //   itemName: values.itemName,
-  //   //   price: values.price,
-  //   //   category: values.category,
-  //   //   unit: values.unit,
-  //   //   userId: 4,
-  //   // }
-  // );
-  addDummyData();
+    addItemWithPrices(
+      {
+      itemName: values.itemName,
+      price: values.price,
+      category: values.category,
+      unit: values.unit,
+      userId: 22,
+    }
+  );
+  // addDummyData();
   // createUser()
-    // router.push("/price");
+    router.push("/price");
   };
 
   return (
