@@ -5,12 +5,15 @@ import {
   calculateAverage,
   filterOutliers,
   roundPrice,
-  studentItems,
+  // studentItems,
 } from "@/constants";
+import { getAllItems } from "@/lib/actions/price.actions";
 import Image from "next/image";
 import React from "react";
 
 const Home = async () => {
+  const studentItems = await getAllItems()
+  // console.log('students items =' , studentItems)
   return (
     <section className="flex flex-col  w-full">
       <div className="mt-4 w-full">
@@ -41,9 +44,9 @@ const Home = async () => {
               {/* @ts-ignore */}
               {/* Fetch Items from database according to category */}
               <div className=" m-1 flex flex-col gap-3">
-                {studentItems.map(
+                { studentItems?.map(
                   (item) =>
-                    item.category === tab.value && (
+                    item.categoryName === tab.value && (
                       <div
                         className="flex w-full justify-between"
                         key={item.name}
@@ -84,7 +87,7 @@ const Home = async () => {
                 value={tab.value}
                 className=" bg-transparent focus:bg-transparent data-[state=active]:bg-transperent data-[state=active]:text-white text-slate-400 data-[state=active]:border-b-2"
               >
-                <p className="max-sm:text-xsm">kkkk{tab.label}</p>
+                <p className="max-sm:text-xsm">{tab.label}</p>
               </TabsTrigger>
             ))}
           </TabsList>

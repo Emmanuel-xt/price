@@ -20,7 +20,7 @@ function Searchbar( {routeType} ) {
       } else {
         router.push(`/${routeType}`);
       }
-    }, 500);
+    }, 50);
 
     return () => clearTimeout(delayDebounceFn);
   }, [search, routeType]);
@@ -39,7 +39,7 @@ function Searchbar( {routeType} ) {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder={`${
-          routeType !== "/price" ? "Search Items" : "Search Items"
+          routeType !== "/price" ? "Search Item" : "Search Items"
         }`}
         className='no-focus  border-none bg-dark-3 text-base-regular text-light-4 outline-none'
       />
