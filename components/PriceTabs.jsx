@@ -45,8 +45,17 @@ const PriceTabs = ({ studentItems , searchParams }) => {
               value={tab.value}
               className="w-full text-light-1"
             >
-              {/* @ts-ignore */}
-              {/* Fetch Items from database according to category */}
+              {/* tabs description */}
+              <div className="flex w-full justify-between px-2 text-slate-400 mb-5">
+                <div className="flex gap-4 items-center">
+                  <h5 className=" sm:text-xsm  ">name</h5>
+                  <p className="text-[8px]">/ qty</p>
+                </div>
+                <div className="flex gap-3">
+                  <p className="text-[9px] ">avg </p>
+                  <p className=" px-6">price</p>
+                </div>
+              </div>
               <div className=" m-1 flex flex-col gap-3">
                 {studentItems
                   ?.filter((item) => {
