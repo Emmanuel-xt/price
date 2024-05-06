@@ -186,8 +186,18 @@ export const roundPrice = (averagePrice) => {
   return roundedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const numberSplit = (number) => (
+  number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+)
+
+
 export const InfoCategories = [
   { value: "Shops", label: "Shops", icon: "/assets/request.svg" },
   { value: "News", label: "News", icon: "/assets/request.svg" },
   { value: "Announcement", label: "Announcement", icon: "/assets/members.svg" },
 ];
+
+
+export const ItemTabs = [
+  'Price' , 'Info' , 'Slashed'
+]

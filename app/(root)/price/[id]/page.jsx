@@ -1,128 +1,60 @@
-'use client';
-import { AreaChart, Card, List, ListItem } from '@tremor/react';
+import { fetchItemByName } from "@/lib/actions/price.actions";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  ItemTabs,
+  PriceCategories,
+  filterOutliers,
+  roundPrice,
+  studentItems,
+} from "@/constants";
+import Link from "next/link";
+import Price from "@/components/tabs/Price";
+import Info from "@/components/tabs/Info";
+import Slashed from "@/components/tabs/Slashed";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+const page = async ({ params }) => {
+  if (!params.id) return null;
+  const item = await fetchItemByName(params.id);
+  const array = (item) => (
 
-const data = [
-  {
-    date: 'Jan 23',
-    Organic: 232,
-  
-  },
-  {
-    date: 'Feb 23',
-    Organic: 241,
-  
-  },
-  {
-    date: 'Mar 23',
-    Organic: 291,
-  
-  },
-  {
-    date: 'Apr 23',
-    Organic: 101,
-  
-  },
-  {
-    date: 'May 23',
-    Organic: 318,
-  
-  },
-  {
-    date: 'Jun 23',
-    Organic: 205,
-  
-  },
-  {
-    date: 'Jul 23',
-    Organic: 372,
-  
-  },
-  {
-    date: 'Aug 23',
-    Organic: 341,
-  
-  },
-  {
-    date: 'Sep 23',
-    Organic: 387,
-    Sponsored: 120,
-  },
-  {
-    date: 'Oct 23',
-    Organic: 220,
-  
-  },
-  {
-    date: 'Nov 23',
-    Organic: 372,
-  
-  },
-  {
-    date: 'Dec 23',
-    Organic: 321,
-  
-  },
-];
+    item.prices = item.prices.map((price) => price.value)
+  )
+  const prices = array(item)
+  console.log('array=' , prices)
 
-const summary = [
-  {
-    name: 'Organic',
-    value: 3273,
-  },
-  {
-    name: 'Sponsored',
-    value: 120,
-  },
-];
 
-const valueFormatter = (number) =>
-  `${Intl.NumberFormat('us').format(number).toString()}`;
-
-const statusColor = {
-  Organic: 'bg-blue-500',
-  Sponsored: 'bg-violet-500',
+  console.log('item =' , item)
+  return (
+    <div>
+      <Tabs defaultValue="Price" className=" bg-transparent  ">
+        <div className="border-b border-b-slate-700 sticky top-14  bg-dark-1 ">
+          <h6 className="font-extrabold">
+            {params.id}/{item?.categoryName}
+          </h6>
+          <TabsList className="bg-transperent items-start text-left  backdrop-blur-lg overflow-x-auto overflow-y-hidden ">
+            {ItemTabs.map((tab) => (
+              <TabsTrigger
+                key={tab}
+                value={tab}
+                className=" bg-transparent focus:bg-transparent data-[state=active]:bg-transperent data-[state=active]:text-white text-slate-400 data-[state=active]:border-b-2"
+              >
+                <p className="max-sm:text-xsm">{tab}</p>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+        <TabsContent value="Price" className="w-full text-light-1">
+          <Price item={item} prices={prices} />
+        </TabsContent>
+        <TabsContent value="Info" className="w-full text-light-1">
+          <Info />
+        </TabsContent>
+        <TabsContent value="Slashed" className="w-full text-light-1">
+          <Slashed />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
 };
 
-export default function Example(id) {
-  return (
-    <>
-      <Card className="sm:mx-auto sm:max-w-lg">
-        <h3 className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-          Follower metrics
-        </h3>
-        <AreaChart
-          data={data}
-          index="date"
-          categories={['Organic', 'Sponsored']}
-          colors={['blue', 'violet']}
-          valueFormatter={valueFormatter}
-          showLegend={false}
-          showYAxis={false}
-          showGradient={false}
-          startEndOnly={true}
-          className="mt-6 h-32"
-        />
-        <List className="mt-2">
-          {summary.map((item) => (
-            <ListItem key={item.name}>
-              <div className="flex items-center space-x-2">
-                <span
-                  className={classNames(statusColor[item.name], 'h-0.5 w-3')}
-                  aria-hidden={true}
-                />
-                <span>{item.name}</span>
-              </div>
-              <span className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                {valueFormatter(item.value)}
-              </span>
-            </ListItem>
-          ))}
-        </List>
-      </Card>
-    </>
-  );
-}
+export default page;

@@ -53,12 +53,12 @@ const Home = async () => {
                 </div>
               </div>
 
-              <div className=" m-1 flex flex-col gap-3">
+              <div className=" m-1 flex flex-col gap-3 ">
                 {studentItems?.map(
                   (item) =>
                     item.categoryName === tab.value && (
                       <div
-                        className="flex w-full justify-between"
+                        className="flex w-full justify-between hover:bg-dark-4 cursor-pointer rounded-md p-1"
                         key={item.name}
                       >
                         <div className="flex gap-4 items-center">

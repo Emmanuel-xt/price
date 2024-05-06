@@ -11,6 +11,7 @@ import {
   roundPrice,
   // studentItems,
 } from "@/constants";
+import Link from "next/link";
 
 const PriceTabs = ({ studentItems , searchParams }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,8 +73,8 @@ const PriceTabs = ({ studentItems , searchParams }) => {
                     (item) =>
                       (item.categoryName === tab.value ||
                         tab.value === "All") && (
-                        <div
-                          className="flex w-full justify-between"
+                        <Link href={`price/${item.name}`}
+                          className="flex w-full justify-between hover:bg-dark-4 cursor-pointer rounded-md p-1 "
                           key={item.name}
                         >
                           <div className="flex gap-4 items-center">
@@ -94,7 +95,7 @@ const PriceTabs = ({ studentItems , searchParams }) => {
                               {roundPrice(filterOutliers(item.prices))}
                             </p>
                           </div>
-                        </div>
+                        </Link>
                       )
                   )}
               </div>
