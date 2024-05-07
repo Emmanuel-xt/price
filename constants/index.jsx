@@ -40,7 +40,6 @@ export const HomeCategories = [
   { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },
   { value: "Food", label: "Food", icon: "/assets/request.svg" },
   { value: "Others", label: "Others", icon: "/assets/request.svg" },
-
 ];
 export const PriceCategories = [
   { value: "All", label: "All", icon: "/assets/members.svg" },
@@ -51,7 +50,6 @@ export const PriceCategories = [
   { value: "Food", label: "Food Items", icon: "/assets/request.svg" },
   { value: "Services", label: "Services", icon: "/assets/request.svg" },
   { value: "Others", label: "Others", icon: "/assets/request.svg" },
-
 ];
 // export const studentItems = [
 //   { category: "Educational", name: "Notebook", prices: [7000], qty: 5 },
@@ -91,12 +89,6 @@ export const PriceCategories = [
 //   { category: "Food", name: "Eggs (Dozen)", prices: [400, 405, 410, 415, 420, 425], qty: 1 }
 // ];
 
-
-export const studentItems = async () => {
-  const items = await getAllItems()
-  console.log('ITEMS WERE FETCHED SUCCESFULLY ')
-  return items
-}
 export const filterOutliers = (prices) => {
   // console.log('about to perform the filter function')
   // console.log({prices})
@@ -106,18 +98,20 @@ export const filterOutliers = (prices) => {
     return acc;
   }, {});
   // console.log({priceFrequency})
-  
+
   // Find the price that appears most frequently
   const maxFrequency = Math.max(...Object.values(priceFrequency));
   const maxFrequencyPercentage = (maxFrequency / prices.length) * 100;
   // console.log({maxFrequency})
   // console.log({maxFrequencyPercentage})
-  
+
   if (maxFrequencyPercentage >= 40) {
-    const majorityPrices = Object.keys(priceFrequency).filter(price => priceFrequency[price] === maxFrequency).map(Number);
+    const majorityPrices = Object.keys(priceFrequency)
+      .filter((price) => priceFrequency[price] === maxFrequency)
+      .map(Number);
     return calculateAverage(majorityPrices);
   }
-  
+
   // Calculate the median price
   const sortedPrices = prices.sort((a, b) => a - b);
   const medianIndex = Math.floor(sortedPrices.length / 2);
@@ -125,7 +119,7 @@ export const filterOutliers = (prices) => {
   // console.log({sortedPrices})
   // console.log({medianIndex})
   // console.log({medianPrice})
-  
+
   // Calculate the acceptable price range around the median
   // Calculate the acceptable price range around the median based on median price
   let deviation = 0;
@@ -147,14 +141,55 @@ export const filterOutliers = (prices) => {
   // Calculate the acceptable price range
   const minPrice = medianPrice - deviation;
   const maxPrice = medianPrice + deviation;
-  
+
   // Filter out prices within the acceptable range
-  const filteredPrices = prices.filter(price => price >= minPrice && price <= maxPrice);
-  // console.log({filteredPrices})
+  const filteredPrices = prices.filter(
+    (price) => price >= minPrice && price <= maxPrice
+  );
+  console.log({ filteredPrices });
 
   // Calculate the average based on the filtered prices
-  return calculateAverage(filteredPrices);
-}
+  const average = calculateAverage(filteredPrices);
+  return average;
+};
+
+export const truthy = (prices) => {
+  const priceFrequency = prices.reduce((acc, price) => {
+    acc[price] = (acc[price] || 0) + 1;
+    return acc;
+  }, {});
+  const maxFrequency = Math.max(...Object.values(priceFrequency));
+  const maxFrequencyPercentage = (maxFrequency / prices.length) * 100;
+  if (maxFrequencyPercentage >= 40) {
+    const majorityPrices = Object.keys(priceFrequency)
+      .filter((price) => priceFrequency[price] === maxFrequency)
+      .map(Number);
+    return calculateAverage(majorityPrices);
+  }
+  const sortedPrices = prices.sort((a, b) => a - b);
+  const medianIndex = Math.floor(sortedPrices.length / 2);
+  const medianPrice = sortedPrices[medianIndex];
+  let deviation = 0;
+  if (medianPrice <= 500) {
+    deviation = 100;
+  } else if (medianPrice <= 1000) {
+    deviation = 150;
+  } else if (medianPrice <= 2000) {
+    deviation = 200;
+  } else if (medianPrice <= 5000) {
+    deviation = 500;
+  } else if (medianPrice <= 10000) {
+    deviation = 750;
+  } else if (medianPrice <= 20000) {
+    deviation = 1000;
+  }
+  const minPrice = medianPrice - deviation;
+  const maxPrice = medianPrice + deviation;
+  const filteredPrices = prices.filter(
+    (price) => price >= minPrice && price <= maxPrice
+  );
+  return Array.isArray(filteredPrices) ? filteredPrices : [filteredPrices];
+};
 
 export const calculateAverage = (prices) => {
   if (prices.length === 0) {
@@ -162,6 +197,7 @@ export const calculateAverage = (prices) => {
   }
 
   // Calculate the sum of prices
+  console.log("prices =", prices);
   const sum = prices.reduce((acc, price) => acc + price, 0);
 
   // Calculate the average
@@ -170,26 +206,23 @@ export const calculateAverage = (prices) => {
   return average;
 };
 
-
 export const roundPrice = (averagePrice) => {
   const lastTwoDigits = averagePrice % 100;
   let roundedPrice;
 
   if (lastTwoDigits <= 24) {
-      roundedPrice = Math.floor(averagePrice / 100) * 100; // Round down to nearest 100
+    roundedPrice = Math.floor(averagePrice / 100) * 100; // Round down to nearest 100
   } else if (lastTwoDigits <= 59) {
-      roundedPrice = (Math.floor(averagePrice / 100) * 100) + 50; // Round up to nearest 50
+    roundedPrice = Math.floor(averagePrice / 100) * 100 + 50; // Round up to nearest 50
   } else {
-      roundedPrice = (Math.floor(averagePrice / 100) * 100) + 100; // Round up to nearest 100
+    roundedPrice = Math.floor(averagePrice / 100) * 100 + 100; // Round up to nearest 100
   }
 
   return roundedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 
-const numberSplit = (number) => (
-  number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-)
-
+const numberSplit = (number) =>
+  number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 export const InfoCategories = [
   { value: "Shops", label: "Shops", icon: "/assets/request.svg" },
@@ -197,7 +230,7 @@ export const InfoCategories = [
   { value: "Announcement", label: "Announcement", icon: "/assets/members.svg" },
 ];
 
+export const ItemTabs = ["Price", "Info", "Slashed"];
 
-export const ItemTabs = [
-  'Price' , 'Info' , 'Slashed'
-]
+
+

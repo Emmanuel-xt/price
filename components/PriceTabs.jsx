@@ -7,13 +7,14 @@ import {
   HomeCategories,
   InfoCategories,
   PriceCategories,
+  calculateAverage,
   filterOutliers,
   roundPrice,
   // studentItems,
 } from "@/constants";
 import Link from "next/link";
 
-const PriceTabs = ({ studentItems , searchParams }) => {
+const PriceTabs = ({ studentItems, searchParams }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -73,7 +74,8 @@ const PriceTabs = ({ studentItems , searchParams }) => {
                     (item) =>
                       (item.categoryName === tab.value ||
                         tab.value === "All") && (
-                        <Link href={`price/${item.name}`}
+                        <Link
+                          href={`price/${item.name}`}
                           className="flex w-full justify-between hover:bg-dark-4 cursor-pointer rounded-md p-1 "
                           key={item.name}
                         >

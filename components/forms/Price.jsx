@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PriceCategories, studentItems } from "@/constants";
+import { PriceCategories } from "@/constants";
 import { itemValidation } from "@/lib/validations/price";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,17 +27,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import {  addDummyData, addItemWithPrices, createUser, } from "@/lib/actions/price.actions";
+import {  addDummyData, addItemWithPrices, createUser, getAllItems, } from "@/lib/actions/price.actions";
 import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/user.action";
 
 const Price = () => {
   const router = useRouter();
 
+
   const [itemName, setItemName] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
+
+ const  studentItems = []
 
   // useForm hook from react-hook-form
   const form = useForm({
@@ -55,7 +58,7 @@ const Price = () => {
     const inputValue = e.target.value;
     console.log('v' , inputValue)
     setSearchValue(inputValue);
-    const filtered = studentItems.filter((item) =>
+    const filtered = studentItems?.filter((item) =>
       item.name.toLowerCase().startsWith(inputValue.toLowerCase())
     );
     setFilteredItems(filtered);

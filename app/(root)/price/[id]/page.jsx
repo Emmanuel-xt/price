@@ -15,19 +15,24 @@ import Slashed from "@/components/tabs/Slashed";
 const page = async ({ params }) => {
   if (!params.id) return null;
   const item = await fetchItemByName(params.id);
+
   const array = (item) => (
-
-    item.prices = item.prices.map((price) => price.value)
-  )
-  const prices = array(item)
-  console.log('array=' , prices)
-
-
-  console.log('item =' , item)
+    item.prices.map((price) => price.value)
+  );
+  
+  const prices = array(item);
+  
+  const newItem = JSON.parse(JSON.stringify(item));
+  
+  newItem.prices = prices;
+  
+  // console.log('array=', prices);
+  // console.log('item =', item); 
+  // console.log('newItem =', newItem); 
   return (
     <div>
       <Tabs defaultValue="Price" className=" bg-transparent  ">
-        <div className="border-b border-b-slate-700 sticky top-14  bg-dark-1 ">
+        <div className="border-b border-b-slate-900 sticky top-14  bg-dark-1 ">
           <h6 className="font-extrabold">
             {params.id}/{item?.categoryName}
           </h6>
