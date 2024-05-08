@@ -54,7 +54,7 @@ const Home = async () => {
               </div>
 
               <div className=" m-1 flex flex-col gap-3 ">
-                {studentItems?.map(
+                {studentItems && studentItems?.map(
                   (item) =>
                     item.categoryName === tab.value && (
                       <div

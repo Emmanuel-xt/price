@@ -89,7 +89,7 @@ const Price = () => {
       price: values.price,
       category: values.category,
       unit: values.unit,
-      userId: 22,
+      userId: 21,
     }
   );
   // addDummyData();

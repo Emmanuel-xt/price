@@ -146,7 +146,7 @@ export const filterOutliers = (prices) => {
   const filteredPrices = prices.filter(
     (price) => price >= minPrice && price <= maxPrice
   );
-  console.log({ filteredPrices });
+  // console.log({ filteredPrices });
 
   // Calculate the average based on the filtered prices
   const average = calculateAverage(filteredPrices);
@@ -197,7 +197,7 @@ export const calculateAverage = (prices) => {
   }
 
   // Calculate the sum of prices
-  console.log("prices =", prices);
+  // console.log("prices =", prices);/
   const sum = prices.reduce((acc, price) => acc + price, 0);
 
   // Calculate the average
