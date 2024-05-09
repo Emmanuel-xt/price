@@ -31,12 +31,13 @@ import {  addDummyData, addItemWithPrices, createUser, getAllItems, } from "@/li
 import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/user.action";
 
-const Price = () => {
+const Price = ({params}) => {
   const router = useRouter();
+  // const item = params.replace(/%20/g, " ")
 
 
   const [itemName, setItemName] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(`${params}`);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
@@ -46,10 +47,10 @@ const Price = () => {
   const form = useForm({
     resolver: zodResolver(itemValidation),
     defaultValues: {
-      itemName: "",
+      itemName: params ,
       category: "",
       unit: "",
-      price: "",
+      price: "7",
     },
   });
 
@@ -94,7 +95,7 @@ const Price = () => {
   );
   // addDummyData();
   // createUser()
-    router.push("/price");
+    // router.push("/price");
   };
 
   return (
@@ -113,6 +114,7 @@ const Price = () => {
                     placeholder="Name of Item"
                     className="bg-dark-1 border-primary-500 outline-primary-500 md:max-w-[50%]"
                     value={searchValue}
+                    disabled={params && true}
                     onChange={handleInputChange}
                     // {...field}
                   />
