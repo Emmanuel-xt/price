@@ -49,9 +49,15 @@ const page = async ({ params }) => {
                 </TabsTrigger>
               ))}
             </TabsList>
+            <div className="flex gap-2">
             <Link href={`/add/${itemName}`} className=" bg-primary-500 p-1 rounded-md flex items-center">
               <Image src="/assets/add.svg" alt="add" width={20} height={20} />
             </Link>
+            <Link href={`/add/${itemName}`} className=" bg-primary-500 p-1 rounded-md flex items-center">
+              <Image src="/assets/edit.svg" alt="add" width={20} height={20} />
+            </Link>
+
+            </div>
           </div>
         </div>
         <TabsContent value="Price" className="w-full text-light-1">

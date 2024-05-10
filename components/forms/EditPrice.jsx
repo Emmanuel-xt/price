@@ -27,27 +27,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import {  addDummyData, addItemWithPrices, createUser, getAllItems, updatePriceById, } from "@/lib/actions/price.actions";
+import {
+  addDummyData,
+  addItemWithPrices,
+  createUser,
+  getAllItems,
+  updatePriceById,
+} from "@/lib/actions/price.actions";
 import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/user.action";
 
-const Price = ({params , price ,id}) => {
+const EditPrice = ({ params, price, id }) => {
   const router = useRouter();
   // const item = params.replace(/%20/g, " ")
-
 
   const [itemName, setItemName] = useState("");
   const [searchValue, setSearchValue] = useState(`${params}`);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
- const  studentItems = []
+  const studentItems = [];
 
   // useForm hook from react-hook-form
   const form = useForm({
     resolver: zodResolver(itemValidation),
     defaultValues: {
-      itemName: params ,
+      itemName: params,
       category: "",
       unit: "",
       price: price || "",
@@ -57,7 +62,7 @@ const Price = ({params , price ,id}) => {
   // Function to handle input change and filter items
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    console.log('v' , inputValue)
+    console.log("v", inputValue);
     setSearchValue(inputValue);
     const filtered = studentItems?.filter((item) =>
       item.name.toLowerCase().startsWith(inputValue.toLowerCase())
@@ -85,35 +90,18 @@ const Price = ({params , price ,id}) => {
 
   const onSubmit = async (values) => {
     try {
-      const success = addItemWithPrices(
-        {
-        itemName: values.itemName,
-        price: values.price,
-        category: values.category,
-        unit: values.unit,
-        userId: 20,
+      const success = updatePriceById({
+        newPrice: values.price,
+        id: id,
+      });
+      // addDummyData();
+      if (success) {
+        // router.push("/price");
       }
-    );
-    // addDummyData();
-    if(success){
-      router.push("/price");
-    }
     } catch (error) {
       return null;
     }
   };
-  const onEdit = async (values) => {
-    try {
-      const updatePrice = await updatePriceById({
-        newPrice : values.price,
-        id : id,
-
-      })
-      console.log({updatePrice})
-    } catch (error) {
-      
-    }
-  }
 
   return (
     <Form {...form}>
@@ -227,11 +215,11 @@ const Price = ({params , price ,id}) => {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Add
+          Edit
         </Button>
       </form>
     </Form>
   );
 };
 
-export default Price;
+export default EditPrice;
