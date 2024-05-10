@@ -45,6 +45,7 @@ const EditPrice = ({ params, price, id }) => {
   const [searchValue, setSearchValue] = useState(`${params}`);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const studentItems = [];
 
@@ -89,6 +90,7 @@ const EditPrice = ({ params, price, id }) => {
   };
 
   const onSubmit = async (values) => {
+      setLoading(true);
     try {
       const success = updatePriceById({
         newPrice: values.price,
@@ -96,10 +98,12 @@ const EditPrice = ({ params, price, id }) => {
       });
       // addDummyData();
       if (success) {
-        // router.push("/price");
+        router.push("/price");
       }
     } catch (error) {
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -214,9 +218,15 @@ const EditPrice = ({ params, price, id }) => {
           )}
         />
 
-        <Button type="submit" className="bg-primary-500">
-          Edit
-        </Button>
+        {loading ? (
+          <Button type="submit" className="bg-primary-500">
+            Editing....
+          </Button>
+        ) : (
+          <Button type="submit" className="bg-primary-500" onClick={() => setLoading(true)}>
+            Edit
+          </Button>
+        )}
       </form>
     </Form>
   );
