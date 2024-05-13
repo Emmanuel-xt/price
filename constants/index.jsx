@@ -88,7 +88,15 @@ export const PriceCategories = [
 //   { category: "Toiletries", name: "Toilet Paper (Pack of 4)", prices: [200, 205, 210, 215, 220, 225], qty: 1 },
 //   { category: "Food", name: "Eggs (Dozen)", prices: [400, 405, 410, 415, 420, 425], qty: 1 }
 // ];
-
+export const engineeringDepartments = [
+  "Mechanical Engineering",
+  "Civil Engineering",
+  "Electrical/Electronic Engineering",
+  "Computer Engineering",
+  "Petroleum Engineering",
+  "Chemical Engineering",
+  "Agricultural Engineering",
+]
 export const filterOutliers = (prices) => {
   // console.log('about to perform the filter function')
   // console.log({prices})
@@ -232,5 +240,22 @@ export const InfoCategories = [
 
 export const ItemTabs = ["Price", "Info", "Slashed"];
 
+
+export function date(timestamp) {
+  const date = new Date(timestamp);
+
+  // Get various date components
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+  const day = ('0' + date.getDate()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+
+  // Create a string representation of the date and time
+  const dateTimeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  return dateTimeString;
+}
 
 

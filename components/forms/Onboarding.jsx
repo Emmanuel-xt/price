@@ -8,8 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PriceCategories } from "@/constants";
-import { itemValidation } from "@/lib/validations/price";
+import { PriceCategories, engineeringDepartments } from "@/constants";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,22 +26,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { userValidation } from "@/lib/validations/user";
+import { createUser } from "@/lib/actions/user.action";
 // import { createUser } from "@/lib/actions/user.action";
 
-const Onboarding = ({ params, price, id }) => {
+const Onboarding = ({ user }) => {
   const router = useRouter();
   // const item = params.replace(/%20/g, " ")
 
-
-
   // useForm hook from react-hook-form
   const form = useForm({
-    resolver: zodResolver(itemValidation),
+    resolver: zodResolver(userValidation),
     defaultValues: {
-      itemName: params,
-      category: "",
-      unit: "",
-      price: price || "",
+      fullname: user.fullname || "",
+      username: "",
+      department: "",
+      level: "",
     },
   });
 
@@ -61,26 +60,41 @@ const Onboarding = ({ params, price, id }) => {
     form.setValue("itemName", inputValue);
   };
 
-  const onSubmit = async () => {};
+  const onSubmit = async (values) => {
+    try {
+      const create = await createUser({
+        id: user.id,
+        email: user.email,
+        fullname: values.fullname,
+        username: values.username,
+        department: values.department,
+        level: values.level,
+        createdAt: user.createdAt,
+        gender: user.gender ? user.gender:  "",
+      });
+    } catch (error) {
+      console.log("Error registering user at the database", error);
+    }
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="itemName"
+          name="fullname"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2 ">
-              <FormLabel className="">Name</FormLabel>
+              <FormLabel className="">Full Name</FormLabel>
               <div className="flex flex-col gap-3 items-">
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder="Name of Item"
+                    placeholder="Enter your full name "
                     className="bg-dark-1 border-primary-500 outline-primary-500 md:max-w-[50%]"
-                    disabled={params && true}
+                    // disabled={params && true}
                     onChange={handleInputChange}
-                    // {...field}
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -88,65 +102,85 @@ const Onboarding = ({ params, price, id }) => {
             </FormItem>
           )}
         />
-        <div className="flex gap-6">
-          <FormField
-            control={form.control}
-            name="price"
-            className="flex gap-4"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Price</FormLabel>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 ">
+              <FormLabel className="">Username</FormLabel>
+              <div className="flex flex-col gap-3 items-">
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder=" Price"
-                    className="bg-dark-1 border-primary-500"
+                    type="text"
+                    placeholder="Enter your unique username"
+                    className="bg-dark-1 border-primary-500 outline-primary-500 md:max-w-[50%]"
+                    // disabled={params && true}
+                    onChange={handleInputChange}
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="text-[10px] " />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="unit"
-            className="flex gap-4"
-            render={({ field }) => (
-              <FormItem className="flex gap-3 items-center">
-                <FormLabel>Unit</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="Quantity "
-                    className="bg-dark-1 border-primary-500"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px] " />
-              </FormItem>
-            )}
-          />
-        </div>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
-          name="category"
+          name="department"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3">
-              <FormLabel>Category</FormLabel>
+            <FormItem className="">
+              <FormLabel>Department</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="w-[180px] bg-dark-1 border-primary-500 outline-none">
-                  <SelectValue placeholder="Category" />
+                <SelectTrigger className="w-full bg-dark-1 border-primary-500 outline-none">
+                  <SelectValue
+                    placeholder="Select your department"
+                    className="placeholder:text-slate-900"
+                  />
                 </SelectTrigger>
                 <SelectContent className="bg-dark-1  text-white border-primary-500 ">
-                  {PriceCategories.map((category) => (
+                  {engineeringDepartments.map((department) => (
                     <SelectItem
-                      key={category.label}
-                      value={category.label}
+                      key={department}
+                      value={department}
                       className="hover:bg-dark-3"
                     >
-                      {category.label}
+                      {department}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="level"
+          render={({ field }) => (
+            <FormItem className="">
+              <FormLabel></FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="w-[180px] bg-dark-1 border-primary-500 outline-none">
+                  <SelectValue placeholder="Level" />
+                </SelectTrigger>
+                <SelectContent className="bg-dark-1  text-white border-primary-500 ">
+                  {[
+                    "100",
+                    "200",
+                    "300",
+                    "400",
+                    "500",
+                    "600",
+                    "I am a graduate 😁",
+                    "I am not a student",
+                  ].map((level) => (
+                    <SelectItem
+                      key={level}
+                      value={level}
+                      className="hover:bg-dark-3"
+                    >
+                      {level}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -157,7 +191,7 @@ const Onboarding = ({ params, price, id }) => {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Add
+          Continue
         </Button>
       </form>
     </Form>
