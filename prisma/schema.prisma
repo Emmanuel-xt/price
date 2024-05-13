@@ -5,40 +5,46 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url = env("DATABASE_URL")
+  // url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
 model Category {
-  name      String     @id
-  items     Item[]
+  name  String @id
+  items Item[]
 }
 
 model Item {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  category    Category  @relation(fields: [categoryName], references: [name])
-  categoryName  String
-  prices      Price[] 
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  category     Category @relation(fields: [categoryName], references: [name])
+  categoryName String
+  creator      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  prices       Price[]
 }
 
 model User {
-  id    String    @id  @unique 
-  email String @unique
-  username  String @unique
-  fullname  String   
+  id         String  @id @unique
+  email      String  @unique
+  username   String  @unique
+  fullname   String
   department String
-  level String
-  gender String
-  createdAt String
-  prices Price[]
+  level      String
+  gender     String
+  createdAt  String
+  prices     Price[]
 }
 
 model Price {
-  id       Int     @id @default(autoincrement())
-  value    Int
-  item     Item    @relation(fields: [itemName], references: [name])
-  itemName String
-  user     User    @relation(fields: [userName], references: [username])
-  userName String
+  id        Int      @id @default(autoincrement())
+  value     Int
+  item      Item     @relation(fields: [itemName], references: [name])
+  itemName  String
+  user      User     @relation(fields: [userName], references: [username])
+  createdAt DateTime @default(now())
+  userName  String
 }

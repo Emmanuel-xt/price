@@ -13,11 +13,17 @@ import Info from "@/components/tabs/Info";
 import Slashed from "@/components/tabs/Slashed";
 import { CrossIcon } from "lucide-react";
 import Image from "next/image";
+import { currentUser } from "@clerk/nextjs";
+import { fetchUser } from "@/lib/actions/user.action";
 
 const page = async ({ params }) => {
+  const user = await currentUser()
+ const  userInfo = fetchUser(user.id)
+
   const itemName = params.id.replace(/%20/g, " ");
   if (!params.id) return null;
   const item = await fetchItemByName(itemName);
+  console.log({item})
 
   const array = (item) => item.prices.map((price) => price.value);
 
@@ -26,6 +32,7 @@ const page = async ({ params }) => {
   const newItem = JSON.parse(JSON.stringify(item));
 
   newItem.prices = prices;
+
 
   // console.log('array=', prices);
   // console.log('item =', item);
@@ -53,15 +60,12 @@ const page = async ({ params }) => {
             <Link href={`/add/${itemName}`} className=" bg-primary-500 p-1 rounded-md flex items-center">
               <Image src="/assets/add.svg" alt="add" width={20} height={20} />
             </Link>
-            <Link href={`/add/${itemName}`} className=" bg-primary-500 p-1 rounded-md flex items-center">
-              <Image src="/assets/edit.svg" alt="add" width={20} height={20} />
-            </Link>
 
             </div>
           </div>
         </div>
         <TabsContent value="Price" className="w-full text-light-1">
-          <Price item={item} prices={prices} />
+          <Price item={item} prices={prices} username={userInfo.username} />
         </TabsContent>
         <TabsContent value="Info" className="w-full text-light-1">
           <Info />

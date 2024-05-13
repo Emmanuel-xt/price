@@ -8,7 +8,7 @@ import React from "react";
 import Example from "../DemoChart";
 import Link from "next/link";
 
-const Price = ({ item, prices }) => {
+const Price = ({ item, prices, username }) => {
   const truty = truthy(prices);
   console.log("thruthy =", truty);
   console.log("item =", item.name);
@@ -28,26 +28,36 @@ const Price = ({ item, prices }) => {
           <h6 className="flex-1">Price</h6>
           <h6 className="flex-1">Date</h6>
         </div>
-        {item.prices.map((price) => (
-            <Link href={`/edit/${price.id}`} key={price.userName}>
-          <div className="flex " >
-              <h6 className="flex-1">{price.userName}</h6>
-              <h6
-                className={`flex-1 ${
-                  Array.isArray(truty)
-                    ? truty.includes(price.value)
-                      ? "text-green-500"
-                      : "text-red-500"
-                    : truty === price.value
+        {item && item.prices.map((price) => (
+          <div className="flex ">
+            <h6 className="flex-1">{price.userName}</h6>
+            <h6
+              className={`flex-1 ${
+                Array.isArray(truty)
+                  ? truty.includes(price.value)
                     ? "text-green-500"
                     : "text-red-500"
-                }`}
-              >
-                {roundPrice(price.value)}
-              </h6>
-              <h6 className="flex-1">24-04-24</h6>
+                  : truty === price.value
+                  ? "text-green-500"
+                  : "text-red-500"
+              }`}
+            >
+              {roundPrice(price.value)}
+            </h6>
+            <h6 className="flex-1">
+              24-04-24{" "}
+              {username === price.userName && (
+                <Link href={`/edit/${price.id}`} key={price.userName}>
+                  <Image
+                    src="/assets/edit.svg"
+                    alt="add"
+                    width={20}
+                    height={20}
+                  />
+                </Link>
+              )}
+            </h6>
           </div>
-            </Link>
         ))}
       </div>
     </div>
