@@ -31,8 +31,9 @@ import {  addDummyData, addItemWithPrices, createUser, getAllItems, updatePriceB
 import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/user.action";
 
-const Price = ({params , price ,id}) => {
+const Price = ({params , price , userId}) => {
   const router = useRouter();
+  console.log('USERID ==> ',userId);
   // const item = params.replace(/%20/g, " ")
 
 
@@ -91,7 +92,7 @@ const Price = ({params , price ,id}) => {
         price: values.price,
         category: values.category,
         unit: values.unit,
-        userId: 20,
+        userId: userId,
       }
     );
     // addDummyData();
