@@ -139,7 +139,7 @@ const Home = async () => {
 
       <div className="flex justify-between">
         <h4 className="">What Feature would you like to see here ?</h4>
-        <Link href='/' className="btn">Tell Me</Link>
+        <Link href='https://wa.me/message/NTPZRQPDSOB5C1' className="btn">Tell Me</Link>
       </div>
     </section>
   );
