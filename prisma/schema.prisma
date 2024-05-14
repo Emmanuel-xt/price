@@ -46,5 +46,6 @@ model Price {
   itemName  String
   user      User     @relation(fields: [userName], references: [username])
   createdAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   userName  String
 }

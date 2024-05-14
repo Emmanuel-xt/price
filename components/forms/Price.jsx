@@ -29,11 +29,9 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import {  addDummyData, addItemWithPrices, createUser, getAllItems, updatePriceById, } from "@/lib/actions/price.actions";
 import { useRouter } from "next/navigation";
-// import { createUser } from "@/lib/actions/user.action";
 
-const Price = ({params , price , userId}) => {
+const Price = ({params , price , userInfo}) => {
   const router = useRouter();
-  console.log('USERID ==> ',userId);
   // const item = params.replace(/%20/g, " ")
 
 
@@ -92,7 +90,8 @@ const Price = ({params , price , userId}) => {
         price: values.price,
         category: values.category,
         unit: values.unit,
-        userId: userId,
+        userId: userInfo.id,
+        creator : userInfo.username,
       }
     );
     // addDummyData();

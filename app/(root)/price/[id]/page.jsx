@@ -18,12 +18,13 @@ import { fetchUser } from "@/lib/actions/user.action";
 
 const page = async ({ params }) => {
   const user = await currentUser()
- const  userInfo = fetchUser(user.id)
+ const  userInfo = await fetchUser(user.id)
+//  console.log({userInfo})
 
   const itemName = params.id.replace(/%20/g, " ");
   if (!params.id) return null;
   const item = await fetchItemByName(itemName);
-  console.log({item})
+  // console.log({item})
 
   const array = (item) => item.prices.map((price) => price.value);
 

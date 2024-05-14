@@ -259,3 +259,31 @@ export function date(timestamp) {
 }
 
 
+export function formatDate(date) {
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000); 
+  // console.log({now})
+  // console.log({diff})
+  // console.log({date})
+
+  const seconds = diff;
+  const minutes = Math.floor(diff / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days === 0) {
+      if (hours === 0) {
+          if (minutes === 0) {
+              return 'just now';
+          }
+          return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+      }
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else if (days === 1) {
+      return 'yesterday';
+  } else {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+  }
+}
+

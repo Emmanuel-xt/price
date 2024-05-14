@@ -37,7 +37,7 @@ import {
 import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/user.action";
 
-const EditPrice = ({ params, price, id }) => {
+const EditPrice = ({ params, price, id , canEditName }) => {
   const router = useRouter();
   // const item = params.replace(/%20/g, " ")
 
@@ -123,7 +123,7 @@ const EditPrice = ({ params, price, id }) => {
                     placeholder="Name of Item"
                     className="bg-dark-1 border-primary-500 outline-primary-500 md:max-w-[50%]"
                     value={searchValue}
-                    disabled={params && true}
+                    disabled={!canEditName && true}
                     onChange={handleInputChange}
                     // {...field}
                   />
