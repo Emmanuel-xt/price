@@ -18,7 +18,7 @@ import { fetchUser } from "@/lib/actions/user.action";
 
 const page = async ({ params }) => {
   const user = await currentUser()
- const  userInfo = await fetchUser(user.id)
+ const  userInfo = await fetchUser(user?.id)
 //  console.log({userInfo})
 
   const itemName = params.id.replace(/%20/g, " ");
@@ -66,7 +66,7 @@ const page = async ({ params }) => {
           </div>
         </div>
         <TabsContent value="Price" className="w-full text-light-1">
-          <Price item={item} prices={prices} username={userInfo.username} />
+          <Price item={item} prices={prices} username={userInfo?.username} />
         </TabsContent>
         <TabsContent value="Info" className="w-full text-light-1">
           <Info />

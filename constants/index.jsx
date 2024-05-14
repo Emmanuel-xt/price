@@ -34,7 +34,7 @@ export const sidebarLinks = [
 ];
 
 export const HomeCategories = [
-  { value: "Educational", label: "Educational", icon: "/assets/members.svg" },
+  { value: "Educational", label: "Trending", icon: "/assets/members.svg" },
   { value: "Gadgets", label: "Gadgets", icon: "/assets/request.svg" },
   { value: "Wears", label: "Wears", icon: "/assets/request.svg" },
   { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },

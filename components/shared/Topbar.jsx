@@ -4,6 +4,7 @@
 //   SignOutButton,
 //   UserButton,
 // } from "@clerk/nextjs";
+import { SignOutButton, SignedIn } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,8 +19,8 @@ function Topbar() {
 
       <div className="flex items-center gap-1">
         <div className="block md:hidden">
-          {/* <SignedIn>
-            <SignOutButton> */}
+          <SignedIn>
+            <SignOutButton>
               <div className="flex cursor-pointer">
                 <Image
                   src="/assets/logout.svg"
@@ -28,8 +29,8 @@ function Topbar() {
                   height={24}
                 />
               </div>
-            {/* </SignOutButton>
-          </SignedIn> */}
+            </SignOutButton>
+          </SignedIn>
         </div>
 
         {/* <UserButton afterSignOutUrl="/" />

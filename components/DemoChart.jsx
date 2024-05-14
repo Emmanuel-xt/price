@@ -70,12 +70,12 @@ const data = [
 
 const summary = [
   {
-    name: 'Organic',
-    value: 3273,
+    name: 'Tuthy Price',
+    value: 5,
   },
   {
-    name: 'Sponsored',
-    value: 120,
+    name: 'Falsy Price',
+    value: 2,
   },
 ];
 
@@ -92,17 +92,17 @@ export default function Example(id) {
     <>
       <Card className="sm:mx-auto sm:max-w-lg">
         <h3 className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-          Follower metrics
+          Price Trend(coming soon)
         </h3>
         <AreaChart
           data={data}
           index="date"
           categories={['Organic', 'Sponsored']}
-          colors={['blue', 'violet']}
+          colors={['blue', 'primary-500']}
           valueFormatter={valueFormatter}
           showLegend={false}
           showYAxis={false}
-          showGradient={false}
+          showGradient={true}
           startEndOnly={true}
           className="mt-6 h-32"
         />

@@ -9,6 +9,7 @@ import {
 } from "@/constants";
 import { getAllItems } from "@/lib/actions/price.actions";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Home = async () => {
@@ -136,8 +137,9 @@ const Home = async () => {
         </Tabs>
       </div>
 
-      <div className="">
-        <h4 className="">Posts</h4>
+      <div className="flex justify-between">
+        <h4 className="">What Feature would you like to see here ?</h4>
+        <Link href='/' className="btn">Tell Me</Link>
       </div>
     </section>
   );
