@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { userValidation } from "@/lib/validations/user";
 import { createUser } from "@/lib/actions/user.action";
+
 // import { createUser } from "@/lib/actions/user.action";
 
 const Onboarding = ({ user }) => {
@@ -60,7 +61,11 @@ const Onboarding = ({ user }) => {
     form.setValue("itemName", inputValue);
   };
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true)
+
   const onSubmit = async (values) => {
+    setLoading(true)
     try {
       const create = await createUser({
         id: user.id,
@@ -70,11 +75,17 @@ const Onboarding = ({ user }) => {
         department: values.department,
         level: values.level,
         createdAt: user.createdAt,
-        gender: user.gender ? user.gender:  "",
+        gender: user.gender ? user.gender : "",
       });
+      if (create) {
+        router.push("/");
+      } else {
+        setError("Onboarding failed ");
+      }
     } catch (error) {
       console.log("Error registering user at the database", error);
     }
+
   };
 
   return (
@@ -189,7 +200,7 @@ const Onboarding = ({ user }) => {
             </FormItem>
           )}
         />
-
+        <p className="text-red-500">{error && error}</p>
         <Button type="submit" className="bg-primary-500">
           Continue
         </Button>
