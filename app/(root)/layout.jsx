@@ -12,27 +12,26 @@ import { dark } from "@clerk/themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Threads-clone",
-  description: "A Next.js 13 Meta Threads application clone by emma_js",
+  title: "Price",
+  description:
+    "An application for contributing to the price of items around the school area",
 };
 
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
     <ClerkProvider
       appearance={{
         baseTheme: dark,
       }}
     >
-      <html lang='en'>
+      <html lang="en">
         <body className={inter.className}>
           <Topbar />
 
-          <main className='flex flex-row'>
+          <main className="flex flex-row">
             <LeftSidebar />
-            <section className='flex min-h-screen flex-1 flex-col items-center sm:text-xsm text-light-1 bg-dark-1 px-6 pb-10 md:pt-28 pt-14 max-md:pb-32 sm:px-10 w-full '>
-              <div className='w-full'>{children}</div>
+            <section className="flex min-h-screen flex-1 flex-col items-center sm:text-xsm text-light-1 bg-dark-1 px-6 pb-10 md:pt-28 pt-14 max-md:pb-32 sm:px-10 w-full ">
+              <div className="w-full">{children}</div>
             </section>
             {/* @ts-ignore */}
             <RightSidebar />
@@ -41,6 +40,6 @@ export default function RootLayout({
           <Bottombar />
         </body>
       </html>
-  </ClerkProvider>
+    </ClerkProvider>
   );
 }
