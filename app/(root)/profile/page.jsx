@@ -71,7 +71,7 @@ const page = async () => {
             {/* <h4 className="text-2xl">Other User Info can Go in here</h4> */}
           </div>
           <div className="">
-            <Link href="/onboarding?profile" className="bg-primary-500 p-3 rounded-md">
+            <Link href="/onboarding?q=profile" className="bg-primary-500 p-3 rounded-md">
               Edit Your Profile
             </Link>
           </div>
