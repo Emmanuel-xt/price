@@ -9,7 +9,7 @@ const page = async () => {
   const user = await currentUser();
   const userInfo = await fetchUser(user.id);
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-3 mt-10">
       {userInfo ? (
         <>
           <div className="flex gap-4 items-center">
@@ -26,7 +26,7 @@ const page = async () => {
               </h6>
               <h6 className="font-thin text-sm ">@{userInfo.email}</h6>
               <p className="text-sm text-slate-500 ">
-                Contributor since  {date(userInfo.createdAt)}
+                Contributor since {date(userInfo.createdAt)}
               </p>
             </div>
           </div>
@@ -57,20 +57,27 @@ const page = async () => {
               <div className="">
                 <h6 className="text-sm ">Level</h6>
                 <div className="w-full border border-slate-500">
-            <div
-              className="bg-primary-500"
-              style={{ width: `${(parseFloat(userInfo.level) / 500) * 100}%` }}
-            >
-              <p className=" p-1 rounded ">{userInfo.level}</p>
-            </div>
-          </div>
+                  <div
+                    className="bg-primary-500"
+                    style={{
+                      width: `${(parseFloat(userInfo.level) / 500) * 100}%`,
+                    }}
+                  >
+                    <p className=" p-1 rounded ">{userInfo.level}</p>
+                  </div>
+                </div>
               </div>
             </div>
             {/* <h4 className="text-2xl">Other User Info can Go in here</h4> */}
           </div>
+          <div className="">
+            <Link href="/onboarding?profile" className="bg-primary-500 p-3 rounded-md">
+              Edit Your Profile
+            </Link>
+          </div>
         </>
       ) : (
-        <div className="">Fetching Your Record</div>
+        <div className="">Fetching Your Record....</div>
       )}
     </section>
   );

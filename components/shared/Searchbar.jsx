@@ -7,7 +7,7 @@ import { Input } from "../ui/input";
 
 // import { Input } from "../ui/input";
 
- 
+
 function Searchbar( {routeType} ) {
   const router = useRouter();
   const [search, setSearch] = useState("");

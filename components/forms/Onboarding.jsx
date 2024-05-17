@@ -31,8 +31,16 @@ import { createUser } from "@/lib/actions/user.action";
 
 // import { createUser } from "@/lib/actions/user.action";
 
-const Onboarding = ({ user }) => {
+const Onboarding = ({ user , next  }) => {
   const router = useRouter();
+
+
+
+  // const next = router.back
+  const handleBack = () => {
+    router.back()
+  }
+
   // const item = params.replace(/%20/g, " ")
 
   // useForm hook from react-hook-form
@@ -40,9 +48,9 @@ const Onboarding = ({ user }) => {
     resolver: zodResolver(userValidation),
     defaultValues: {
       fullname: user.fullname || "",
-      username: "",
-      department: "",
-      level: "",
+      username: user.username || "",
+      department: user.department || "",
+      level: user.level || "",
     },
   });
 
@@ -70,7 +78,7 @@ const Onboarding = ({ user }) => {
       const create = await createUser({
         id: user.id,
         email: user.email,
-        fullname: values.fullname,
+        fullname: values.fullname ,
         username: values.username,
         department: values.department,
         level: values.level,
@@ -78,7 +86,7 @@ const Onboarding = ({ user }) => {
         gender: user.gender ? user.gender : "",
       });
       if (create) {
-        router.push("/");
+        router.push(`/${next}`);
       } else {
         setError("Onboarding failed ");
       }
@@ -143,7 +151,7 @@ const Onboarding = ({ user }) => {
             <FormItem className="">
               <FormLabel>Department</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="w-full bg-dark-1 border-primary-500 outline-none">
+                <SelectTrigger className="md:max-w-[50%] bg-dark-1 border-primary-500 outline-none">
                   <SelectValue
                     placeholder="Select your department"
                     className="placeholder:text-slate-900"
@@ -172,7 +180,7 @@ const Onboarding = ({ user }) => {
             <FormItem className="">
               <FormLabel></FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="w-[180px] bg-dark-1 border-primary-500 outline-none">
+                <SelectTrigger className="md:max-w-[50%] bg-dark-1 border-primary-500 outline-none">
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent className="bg-dark-1  text-white border-primary-500 ">
@@ -204,6 +212,7 @@ const Onboarding = ({ user }) => {
         <Button type="submit" className="bg-primary-500">
           Continue
         </Button>
+        <p className="" onClick={handleBack}>Return</p>
       </form>
     </Form>
   );
