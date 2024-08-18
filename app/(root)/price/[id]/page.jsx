@@ -26,11 +26,11 @@ const page = async ({ params }) => {
   const item = await fetchItemByName(itemName);
   // console.log({item})
 
-  const array = (item) => item.prices.map((price) => price.value);
+  const array = (item) => item?.prices.map((price) => price.value);
 
   const prices = array(item);
 
-  const newItem = JSON.parse(JSON.stringify(item));
+  const newItem = JSON?.parse(JSON.stringify(item));
 
   newItem.prices = prices;
 
