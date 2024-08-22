@@ -96,6 +96,7 @@ export const engineeringDepartments = [
   "Petroleum Engineering",
   "Chemical Engineering",
   "Agricultural Engineering",
+  "Polymer&Textile Engineering",
 ]
 export const filterOutliers = (prices) => {
   // console.log('about to perform the filter function')

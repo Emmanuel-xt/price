@@ -86,7 +86,7 @@ const Onboarding = ({ user , next  }) => {
         gender: user.gender ? user.gender : "",
       });
       if (create) {
-        router.push(`/${next}`);
+        router.push(`/${next || ""}`);
       } else {
         setError("Onboarding failed ");
       }

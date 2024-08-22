@@ -21,16 +21,21 @@ const page = async ({ params }) => {
  const  userInfo = await fetchUser(user?.id)
 //  console.log({userInfo})
 
-  const itemName = params.id.replace(/%20/g, " ");
+  const itemName = decodeURIComponent(params.id).replace(/%20/g, " ");
   if (!params.id) return null;
+  console.log('Fetching item with name:', itemName);
   const item = await fetchItemByName(itemName);
-  // console.log({item})
+  console.log({item})
+  if (!item) {
+    console.error(`Item with name: ${itemName} was not found`);
+    return <div>Item not found</div>;
+  }
 
-  const array = (item) => item?.prices.map((price) => price.value);
+  const array = (item) => item.prices.map((price) => price.value);
 
   const prices = array(item);
 
-  const newItem = JSON?.parse(JSON.stringify(item));
+  const newItem = JSON.parse(JSON.stringify(item));
 
   newItem.prices = prices;
 
@@ -41,7 +46,7 @@ const page = async ({ params }) => {
   return (
     <div>
       <Tabs defaultValue="Price" className=" bg-transparent  ">
-        <div className="border-b border-b-slate-900 sticky top-14  bg-dark-1 ">
+        <div className="border-b border-b-slate-900 sticky top-14 mt-10  bg-dark-1 ">
           <h6 className="font-extrabold">
             {itemName}/{item?.categoryName}
           </h6>

@@ -12,6 +12,8 @@ const page = async ({ searchParams }) => {
 
   // console.log('pa', searchParams.q)
   const userInfo = await fetchUser(user.id);
+  console.log('user info', user)
+  console.log('user info', userInfo)
 
   const userData = {
     id:  user.id,
@@ -19,9 +21,9 @@ const page = async ({ searchParams }) => {
     gender: user.gender,
     fullname: userInfo ? userInfo.fullname : user.firstName + " " + user.lastName,
     email: user.emailAddresses[0].emailAddress,
-    username : userInfo.username,
-    department : userInfo.department,
-    level : userInfo.level,
+    username : userInfo ?  userInfo.username : '',
+    department : userInfo ?  userInfo.department : '',
+    level : userInfo ?  userInfo.level : '',
   };
   // console.log({ userData });
   return (
