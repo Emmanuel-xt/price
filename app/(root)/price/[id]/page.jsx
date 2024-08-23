@@ -46,7 +46,7 @@ const page = async ({ params }) => {
   return (
     <div>
       <Tabs defaultValue="Price" className=" bg-transparent  ">
-        <div className="border-b border-b-slate-900 sticky top-20  bg-dark-1 ">
+        <div className="border-b border-b-slate-900 sticky top-[71px] z-20  bg-dark-1 ">
           <h6 className="font-extrabold">
             {itemName}/{item?.categoryName}
           </h6>

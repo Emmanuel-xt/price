@@ -17,7 +17,7 @@ const Page = async ({params}) => {
 
 
   return (
-    <section className="flex flex-col gap-10">
+    <section className="flex flex-col gap-10 mt-7">
       <h4 className="head-text">Add {!itemName && 'item & '}Price</h4>
       <Price params={itemName} userInfo={userInfo}/>
    

@@ -38,7 +38,7 @@ export const HomeCategories = [
   { value: "Gadgets", label: "Gadgets", icon: "/assets/request.svg" },
   { value: "Wears", label: "Wears", icon: "/assets/request.svg" },
   { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },
-  { value: "Food", label: "Food", icon: "/assets/request.svg" },
+  { value: "Food Items", label: "Food", icon: "/assets/request.svg" },
   { value: "Others", label: "Others", icon: "/assets/request.svg" },
 ];
 export const PriceCategories = [
@@ -47,7 +47,7 @@ export const PriceCategories = [
   { value: "Gadgets", label: "Gadgets", icon: "/assets/request.svg" },
   { value: "Wears", label: "Wears", icon: "/assets/request.svg" },
   { value: "Toiletries", label: "Toiletries", icon: "/assets/request.svg" },
-  { value: "Food", label: "Food Items", icon: "/assets/request.svg" },
+  { value: "Food Items", label: "Food Items", icon: "/assets/request.svg" },
   { value: "Services", label: "Services", icon: "/assets/request.svg" },
   { value: "Others", label: "Others", icon: "/assets/request.svg" },
 ];
